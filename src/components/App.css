@@ -1,28 +1,46 @@
-.App {
-  text-align: center;
+* div {
+    font-family: "Open Sans", sans-serif !important;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.navbar.navbar-inverse {
+    background-color: #092211;
+    border-color: #05140a;
+    color: #eeeeee;
+}
+.navbar-inverse .navbar-brand:hover {
+    background-color: #092211;
+    border-color: #05140a;
+    color: #eeeeee;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.currency-row {
+    margin-top: 1em;
 }
 
-.App-title {
-  font-size: 1.5em;
+.section-box {
+    padding: 1em;
+    border: 2px solid lightgrey;
 }
 
-.App-intro {
-  font-size: large;
+a {
+    cursor: pointer;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.jumbotron {
+    background: url(https://betterthings2do.files.wordpress.com/2014/04/stock-chart-blue.png?w=1200) center;
+    color: lightgrey;
+    text-shadow:
+        -2px -2px 0 #222,
+        2px -2px 0 #222,
+        -2px 2px 0 #222,
+        2px 2px 0 #222,
+        3px 3px 0 #000;
+}
+
+.footer {
+    padding: 2em;
+    margin-top: 1em;
+    background-color: #092211;
+    color: #dddddd;
+    text-align: center;
 }
