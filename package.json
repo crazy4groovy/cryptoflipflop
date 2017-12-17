@@ -29,13 +29,13 @@
   },
   "homepage": "https://crazy4groovy.github.io/cryptoflipflop",
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "analyze": "source-map-explorer build/static/js/main.*",
     "build": "react-scripts build",
+    "deploy": "gh-pages -d build",
     "eject": "react-scripts eject",
     "flow": "flow",
     "precommit": "lint-staged",
+    "predeploy": "npm run build",
     "prettier": "prettier --single-quote --write \"src/**/*.{js,jsx}\"",
     "start": "react-scripts start",
     "test": "react-scripts test --env=jsdom"
