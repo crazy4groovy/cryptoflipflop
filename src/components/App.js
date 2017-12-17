@@ -153,9 +153,15 @@ class App extends React.Component {
     })
   }
 
+  coinRefreshMs = 5 * 60 * 1000
+
   componentDidMount() {
-    this.fetchCoins()
-    this.fetchMarketInfo()
+    const fetchData = () => {
+      this.fetchCoins()
+      this.fetchMarketInfo()
+    }
+    fetchData()
+    setInterval(fetchData, this.coinRefreshMs)
   }
 
   render() {
@@ -190,7 +196,13 @@ class App extends React.Component {
           <Navbar.Header>
             <Navbar.Brand>
               <span>CryptoFlipFlop.com</span>
-              <a target="_blank" href="https://coinmarketcap.com/" style={{ color: '#ddd', paddingLeft: '1em', fontSize: '.7em' }}>Coin charts</a>
+              <a
+                target="_blank"
+                href="https://coinmarketcap.com/"
+                style={{ color: '#ddd', paddingLeft: '1em', fontSize: '.7em' }}
+              >
+                Coin charts
+              </a>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
