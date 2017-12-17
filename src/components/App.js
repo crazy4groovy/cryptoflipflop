@@ -306,7 +306,7 @@ class App extends React.Component {
                 )
               })}
           <Row className="footer">
-            <Col sm={12}>Footer</Col>
+            <Col sm={12}>Data refreshes every 5 minutes.</Col>
           </Row>
         </Grid>
       </div>
