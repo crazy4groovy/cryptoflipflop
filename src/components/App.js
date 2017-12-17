@@ -60,7 +60,7 @@ class App extends React.Component {
         }
         this.setState({ account })
         const selectedCurrency = {
-          from: lastTx.toCurrency || 'BTC',
+          from: lastTx.toCurrency,
           to: ''
         }
         this.setState({ selectedCurrency })
@@ -96,10 +96,6 @@ class App extends React.Component {
           account: {
             ...this.state.account,
             ...account
-          },
-          selectedCurrency: {
-            ...this.state.selectedCurrency,
-            from: account.currency || 'BTC'
           }
         })
       })
