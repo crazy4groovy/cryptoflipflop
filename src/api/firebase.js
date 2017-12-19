@@ -19,8 +19,8 @@ export const { auth } = firebase // https://firebase.google.com/docs/auth/web/ma
 
 // auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(...)
 export const createUser = (...args) => auth().createUserWithEmailAndPassword(...args)
-export const signIn = () => auth().signInWithEmailAndPassword
-export const signOut = () => auth().signOut
+export const signIn = (...args) => auth().signInWithEmailAndPassword(...args)
+export const signOut = () => auth().signOut()
 export const userChanged = (...args) => auth().onAuthStateChanged(...args)
 export const uid = () => (auth().currentUser || {}).uid
 // export const token = () => auth().getToken()
