@@ -27,7 +27,7 @@ a {
 }
 
 .jumbotron {
-    background: url('/stock-chart-blue.png') center;
+    background: url('https://crazy4groovy.github.io/cryptoflipflop/stock-chart-blue.png') center;
     color: lightgrey;
     text-shadow:
         -2px -2px 0 #222,
