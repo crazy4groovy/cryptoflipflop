@@ -1,6 +1,10 @@
-# Crypto Flip Flop
+# Crypto Flip/Flop
 
-Practice trading crypto, see if you'll flip for profit, or flop for a loss.
+Practice trading crypto, see if you'll flip for profit, or flop for losses.
+
+## Web App
+
+- [Crypto Flip/Flop](https://crazy4groovy.github.io/cryptoflipflop/)
 
 ## APIs
 
