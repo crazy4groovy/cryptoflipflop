@@ -17,7 +17,7 @@ class component extends React.Component {
         <h2 style={{ display: 'inline' }}>
           <a onClick={this.handleToggleVisible}>Quick Rate Converter</a>&nbsp;
         </h2>
-        <Glyphicon glyph="random" />
+        <Glyphicon glyph="chevron-down" />
         {this.state.isVisible && (
           <Fragment>
             <Row style={{ marginTop: '1em' }}>

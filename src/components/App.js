@@ -121,13 +121,17 @@ class App extends React.Component {
     txsRef.push(tx)
   }
 
-  rateFudge = 1.01 // slightly less transaction cost
-
-  exchangeRateFor = symbol =>
+  exchangeRateFor = (toSymbol, fromSymbol = this.state.selectedCurrency.from, tweak = 1.01) =>
     this.state.marketInfo
-      ? (this.state.marketInfo.find(info => info.pair === `${this.state.selectedCurrency.from}_${symbol}`) || {}).rate *
-        this.rateFudge
+      ? (this.state.marketInfo.find(info => info.pair === `${fromSymbol}_${toSymbol}`) || {}).rate * tweak
       : null
+
+  txFeeFor = (toSymbol, fromSymbol = this.state.selectedCurrency.from) => {
+    const toFrom = this.exchangeRateFor(toSymbol, fromSymbol)
+    const fromTo = this.exchangeRateFor(fromSymbol, toSymbol)
+    const diff = Math.abs(fromTo * toFrom)
+    return (((1 - diff) / 2) * 100).toFixed(5)
+  }
 
   setUid = async uid => {
     console.log('set UID', uid)
@@ -222,7 +226,7 @@ class App extends React.Component {
             )}
             {this.state.txs === null && (
               <h3 style={{ textAlign: 'center' }}>
-                Small transaction fees apply, which are more costly for uncommon coins.
+                Small trade fees apply, which generally cost more for uncommon coins.
               </h3>
             )}
           </Jumbotron>
@@ -232,7 +236,7 @@ class App extends React.Component {
           {this.state.txs !== null && <h3>Total Trades: {this.state.txs.length}</h3>}
           {this.state.account.amount && (
             <h3>
-              Total Coins: {this.state.account.amount} ({this.state.account.currency})
+              Total Coins: {this.state.account.amount.toLocaleString()} ({this.state.account.currency})
             </h3>
           )}
 
@@ -266,29 +270,37 @@ class App extends React.Component {
             <Col sm={3}>
               <h4>Name</h4>
             </Col>
-            <Col sm={9}>
+            <Col sm={2}>
+              <h4>Trade Fee %</h4>
+            </Col>
+            <Col sm={7}>
               <h4>
-                # of Coins <Glyphicon glyph="share-alt" />
+                for # of Coins <Glyphicon glyph="share-alt" />
               </h4>
             </Col>
           </Row>
           {this.state.coins &&
             Object.keys(this.state.coins)
               .filter(currency => this.exchangeRateFor(this.state.coins[currency].symbol))
+              .filter(currency => +this.txFeeFor(currency) > 0.05)
               .map(currency => {
                 const coin = this.state.coins[currency]
                 const exchangeRate = this.exchangeRateFor(coin.symbol)
-                const buttonLabel = this.state.account.amount ? this.state.account.amount * exchangeRate : '?'
+                const buttonLabel = this.state.account.amount
+                  ? (this.state.account.amount * exchangeRate).toLocaleString()
+                  : '?'
+
+                const fee = this.txFeeFor(currency)
 
                 return (
                   <Row key={currency} className="currency-row">
                     <Col xs={6} sm={3}>
                       <img alt="coin logo" src={coin.imageSmall || coin.image} /> ({coin.symbol}) {coin.name}
                     </Col>
-                    <Col xs={6} sm={9}>
+                    <Col xs={1} sm={2}>{fee}</Col>
+                    <Col xs={5} sm={7}>
                       {exchangeRate ? (
                         <Button bsStyle="success" bsSize="small" sm={6} onClick={() => this.doExchangeTo(coin.symbol)}>
-                          Trade for{' '}
                           <span>
                             {buttonLabel} {currency}
                           </span>{' '}

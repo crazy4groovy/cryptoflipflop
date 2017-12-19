@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Button, FormControl, FormGroup, Glyphicon } from 'react-bootstrap'
-import { auth } from '../../api/firebase'
+import { signIn, signOut, createUser, userChanged } from '../../api/firebase'
 
 class component extends React.Component {
   static propTypes = {
@@ -21,42 +21,40 @@ class component extends React.Component {
   }
 
   doSignOut = async () => {
-    const data = await auth().signOut()
-    console.log('signout', data)
+    await signOut()
 
-    this.props.setUid(null)
-    this.props.setName(null)
     this.setState({
       isLoggedIn: false,
       email: '',
       password: ''
     })
+
+    this.props.setUid(null)
+    return this.props.setName(null)
   }
 
-  authDataCb = async data => {
-    if (!data) {
-      console.error(data)
+  authDataCb = async user => {
+    if (!user) {
+      console.error('authDataCb', user)
       return
     }
 
-    await this.props.setUid(data.uid)
     this.setState({
       isLoggedIn: true,
       email: '',
       password: ''
     })
+    return this.props.setUid(user.uid)
   }
 
   doSignIn = () =>
-    auth()
-      .signInWithEmailAndPassword(this.state.email, this.state.password)
+    signIn(this.state.email, this.state.password)
       .then(this.authDataCb)
       .catch(err => alert(err.message || err))
 
   doSignUp = () => {
     const name = prompt('Please enter your account name:', this.state.email)
-    return auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
+    return createUser(this.state.email, this.state.password)
       .then(this.authDataCb)
       .then(() => alert("Welcome! Have fun, and please don't forget your password!"))
       .then(() => this.props.setName(name))
@@ -66,6 +64,14 @@ class component extends React.Component {
         this.props.setName(null)
         this.setState({ isLoggedIn: false })
       })
+  }
+
+  componentDidMount() {
+    userChanged(user => {
+      if (!user) return this.doSignOut()
+
+      return this.authDataCb(user)
+    })
   }
 
   render() {
