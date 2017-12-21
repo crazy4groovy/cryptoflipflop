@@ -288,7 +288,7 @@ class App extends React.Component {
           {this.state.coins &&
             Object.keys(this.state.coins)
               .filter(currency => this.exchangeRateFor(this.state.coins[currency].symbol))
-              .filter(currency => +this.txFeeFor(currency) > 0.05)
+              .filter(currency => +this.txFeeFor(currency) > 0)
               .map(currency => {
                 const coin = this.state.coins[currency]
                 const exchangeRate = this.exchangeRateFor(coin.symbol)
