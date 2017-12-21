@@ -130,7 +130,7 @@ class App extends React.Component {
     const toFrom = this.exchangeRateFor(toSymbol, fromSymbol)
     const fromTo = this.exchangeRateFor(fromSymbol, toSymbol)
     const diff = Math.abs(fromTo * toFrom)
-    return (((1 - diff) / 2) * 100).toFixed(5)
+    return ((1 - diff) / 2 * 100).toFixed(5)
   }
 
   setUid = async uid => {
@@ -233,10 +233,16 @@ class App extends React.Component {
         </Grid>
 
         <Grid>
-          {this.state.txs !== null && <h3>Total Trades: {this.state.txs.length}</h3>}
+          {this.state.txs !== null && (
+            <h3>
+              Total Trades: <span className="digits">{this.state.txs.length}</span>
+            </h3>
+          )}
           {this.state.account.amount && (
             <h3>
-              Total Coins: {this.state.account.amount.toLocaleString()} ({this.state.account.currency})
+              Total Coins: <span className="digits">{this.state.account.amount.toLocaleString()}</span> ({
+                this.state.account.currency
+              })
             </h3>
           )}
 
@@ -297,11 +303,13 @@ class App extends React.Component {
                     <Col xs={6} sm={3}>
                       <img alt="coin logo" src={coin.imageSmall || coin.image} /> ({coin.symbol}) {coin.name}
                     </Col>
-                    <Col xs={1} sm={2}>{fee}</Col>
+                    <Col xs={1} sm={2}>
+                      <span className="digits">{fee}</span>
+                    </Col>
                     <Col xs={5} sm={7}>
                       {exchangeRate ? (
                         <Button bsStyle="success" bsSize="small" sm={6} onClick={() => this.doExchangeTo(coin.symbol)}>
-                          <span>
+                          <span className="digits">
                             {buttonLabel} {currency}
                           </span>{' '}
                           coins <Glyphicon glyph="share-alt" />

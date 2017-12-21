@@ -2,6 +2,11 @@
     font-family: "Open Sans", sans-serif !important;
 }
 
+.digits {
+    font-family: 'Share Tech Mono', monospace !important;
+    font-size: 1.2em;
+}
+
 .navbar.navbar-inverse {
     background-color: #092211;
     border-color: #05140a;

@@ -49,7 +49,13 @@ class component extends React.Component {
 
             <Row>
               <Col sm={12}>
-                <h3>{rate && `Ratio = 1 : ${rate} (${toValue})`}</h3>
+                <h3>
+                  {rate && (
+                    <div>
+                      Ratio = <span className="digits">1</span> ({fromValue}) : <span className="digits">{rate}</span> ({toValue})
+                    </div>
+                  )}
+                </h3>
               </Col>
             </Row>
           </Fragment>
